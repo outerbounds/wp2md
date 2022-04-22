@@ -1,12 +1,8 @@
-# Title
-
+# wp2md
+> Convert Wordpress Posts To Markdown
 
 
 [![CI](https://github.com/outerbounds/wp2md/actions/workflows/main.yml/badge.svg)](https://github.com/outerbounds/wp2md/actions/workflows/main.yml)
-
-# wp2md
-
-> Convert Wordpress Posts To Markdown
 
 ## Install
 
