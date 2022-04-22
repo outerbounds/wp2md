@@ -50,7 +50,10 @@ nb_path: "nbs/00_wp2md.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_post</span> <span class="o">=</span> <span class="n">_getpost</span><span class="p">(</span><span class="mi">247</span><span class="p">,</span> <span class="s1">&#39;https://outerbounds.com/wp-json/wp/v2/posts&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_post</span> <span class="o">=</span> <span class="n">_getpost</span><span class="p">(</span><span class="s1">&#39;https://outerbounds.com/wp-json/wp/v2/posts/220&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">_post</span>
+
+<span class="n">_post</span> <span class="o">=</span> <span class="n">_getpost</span><span class="p">(</span><span class="n">post_id</span><span class="o">=</span><span class="mi">247</span><span class="p">,</span> <span class="n">baseurl</span><span class="o">=</span><span class="s1">&#39;https://outerbounds.com/wp-json/wp/v2/posts&#39;</span><span class="p">)</span> <span class="c1">#this is an alternate way of calling this </span>
 <span class="k">assert</span> <span class="n">_post</span>
 </pre></div>
 
@@ -72,7 +75,63 @@ nb_path: "nbs/00_wp2md.ipynb"
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h2 id="WP" class="doc_header"><code>class</code> <code>WP</code><a href="https://github.com/outerbounds/wp2md/tree/master/wp2md/wp2md.py#L16" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WP</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>baseurl</code></strong>:<code>str</code>)</p>
+<h4 id="url2api" class="doc_header"><code>url2api</code><a href="https://github.com/outerbounds/wp2md/tree/master/wp2md/wp2md.py#L21" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>url2api</code>(<strong><code>url</code></strong>)</p>
+</blockquote>
+<p>Get the wordpress api endpoint to retrieve post from the public url</p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><a href="/wp2md/wp2md.html#url2api"><code>url2api</code></a> allows you to retrieve the full api endpoint to get the contents of the wordpress article <a href="https://developer.wordpress.org/rest-api/reference/posts/#retrieve-a-post">as described here</a> from any public-facing wordpress url!</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_eq</span><span class="p">(</span><span class="n">url2api</span><span class="p">(</span><span class="s1">&#39;https://outerbounds.com/blog/notebooks-in-production-with-metaflow/&#39;</span><span class="p">),</span> <span class="s1">&#39;https://outerbounds.com/wp-json/wp/v2/posts/220&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<h2 id="WP" class="doc_header"><code>class</code> <code>WP</code><a href="https://github.com/outerbounds/wp2md/tree/master/wp2md/wp2md.py#L31" class="source_link" style="float:right">[source]</a></h2><blockquote><p><code>WP</code>(<strong><code>url</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>baseurl</code></strong>:<code>str</code>=<em><code>None</code></em>, <strong><code>post_id</code></strong>:<code>int</code>=<em><code>None</code></em>)</p>
 </blockquote>
 
 </div>
@@ -94,7 +153,7 @@ nb_path: "nbs/00_wp2md.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Instantiating a <a href="/wp2md/wp2md.html#WP"><code>WP</code></a> object will allow you to get access to useful properties that can render as front matter.  The postid can be extracted from wordpress edit url, for example the id for <code>https://outerbounds.com/wp-admin/post.php?post=220&amp;action=edit</code> is <code>220</code>.</p>
+<p>Instantiating a <a href="/wp2md/wp2md.html#WP"><code>WP</code></a> object will allow you to get access to useful properties that can render as front matter.</p>
 
 </div>
 </div>
@@ -106,7 +165,7 @@ nb_path: "nbs/00_wp2md.ipynb"
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_post</span> <span class="o">=</span> <span class="n">WP</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="mi">220</span><span class="p">,</span> <span class="n">baseurl</span><span class="o">=</span><span class="s1">&#39;https://outerbounds.com/wp-json/wp/v2/posts&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_post</span> <span class="o">=</span> <span class="n">WP</span><span class="p">(</span><span class="s1">&#39;https://outerbounds.com/blog/notebooks-in-production-with-metaflow/&#39;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">_post</span><span class="o">.</span><span class="n">frontmatter</span><span class="p">)</span>
 </pre></div>
 
@@ -175,7 +234,7 @@ slug: &#34;notebooks-in-production-with-metaflow&#34;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">_post</span><span class="o">.</span><span class="n">markdown</span><span class="p">[:</span><span class="mi">1200</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">_post</span><span class="o">.</span><span class="n">markdown</span><span class="p">[:</span><span class="mi">1500</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -205,11 +264,138 @@ By Hamel Husain
 When building production-ready machine learning systems, it is critical to monitor the health and performance of those systems with reports and visualizations. Furthermore, allowing for rapid debugging and interactive introspection is critical when workflows fail or do unexpected things. Jupyter notebooks have often been a preferred tool of data scientists for these tasks of visualization, exploration, debugging, and rapid iteration.  Ironically, many production systems do not integrate appropriately with notebooks, which can significantly frustrate progress on these tasks.
 
 
-Indeed, in the field of data science tooling, one of the most [hotly-contested](https://mlops.community/jupyter-notebooks-in-production/) questions is whether notebooks are suitable for production use. We believe that tools should strive to meet data scientists where the
+Indeed, in the field of data science tooling, one of the most [hotly-contested](https://mlops.community/jupyter-notebooks-in-production/) questions is whether notebooks are suitable for production use. We believe that tools should strive to meet data scientists where they are instead of forcing them to adapt approaches from other disciplines not suited to their needs. This is why we are excited to introduce **Notebook Cards**, which allow data scientists to use notebooks for visualizing and debugging production workflows and help to bridge the MLOps divide between 
 </pre>
 </div>
 </div>
 
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Getting-Hidden-Posts">Getting Hidden Posts<a class="anchor-link" href="#Getting-Hidden-Posts"> </a></h3><p>A wordpress post may note be public (i.e. it might have a status other than <code>published</code>).  In that case, you will need two pieces of information to retrieve the markdown content for that post.</p>
+<ol>
+<li><p>The url for the api.  This is <code>&lt;your_site&gt;/wp-json/v2/posts</code>, for example <code>https://outerbounds.com/wp-json/wp/v2/posts</code>.  Note: <em>This is <a href="https://developer.wordpress.org/rest-api/reference/posts/#retrieve-a-post">the api route to retrieve a single WP post</a>.</em></p>
+</li>
+<li><p>The <code>post id</code> you wish to convert to markdown. The post id can be extracted from wordpress edit url, for example the id for <code>https://outerbounds.com/wp-admin/post.php?post=220&amp;action=edit</code> is <code>220</code>.</p>
+</li>
+</ol>
+<p>For example, we can get the contets of a post which has an id of <code>220</code> as follows:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_post</span> <span class="o">=</span> <span class="n">WP</span><span class="p">(</span><span class="n">baseurl</span><span class="o">=</span><span class="s1">&#39;https://outerbounds.com/wp-json/wp/v2/posts&#39;</span><span class="p">,</span> <span class="n">post_id</span><span class="o">=</span><span class="mi">220</span><span class="p">)</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">_post</span><span class="o">.</span><span class="n">title</span><span class="p">,</span> <span class="s1">&#39;Notebooks In Production With Metaflow&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Downloading-Images">Downloading Images<a class="anchor-link" href="#Downloading-Images"> </a></h3><p><code>nb2md</code> also Downloads Images for you, and puts the images in a folder named <code>_&lt;name_of_markdown_file&gt;_data/</code></p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">_post</span><span class="o">.</span><span class="n">mdimages</span><span class="p">)</span> <span class="o">==</span> <span class="mi">5</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_post</span><span class="o">.</span><span class="n">tomd</span><span class="p">()</span>
+<span class="n">_data_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;_notebooks-in-production-with-metaflow_data/&#39;</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">_data_dir</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+<span class="n">_data_dir</span><span class="o">.</span><span class="n">ls</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Writing: notebooks-in-production-with-metaflow.md
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(#5) [Path(&#39;_notebooks-in-production-with-metaflow_data/4_img&#39;),Path(&#39;_notebooks-in-production-with-metaflow_data/2_img&#39;),Path(&#39;_notebooks-in-production-with-metaflow_data/3_img&#39;),Path(&#39;_notebooks-in-production-with-metaflow_data/1_img&#39;),Path(&#39;_notebooks-in-production-with-metaflow_data/0_img&#39;)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    {% endraw %}
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The paths to downloaded images are also automatically replaced in the markdown file:</p>
+
+</div>
+</div>
+</div>
+    {% raw %}
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_md</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s1">&#39;notebooks-in-production-with-metaflow.md&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">_img_url</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;https://lh4.googleusercontent.com/-8XLZezB4E7s64BQcu-KTZO0VWh4VyKXpNhVwzSqPSgrAC_3qu62OZ-fleSr5mGRqPYTcEm5ed_ZKx8o6W0o2JIQea1kCemhuX5cZMMZRRtumGi0yf0mIp3DJWvDzKGpUR9GP8ug&#39;</span>
+<span class="k">assert</span> <span class="n">_img_url</span> <span class="ow">in</span> <span class="n">_post</span><span class="o">.</span><span class="n">raw_markdown</span>
+<span class="k">assert</span> <span class="n">_img_url</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">_md</span>
+</pre></div>
+
+    </div>
 </div>
 </div>
 
@@ -233,44 +419,9 @@ Indeed, in the field of data science tooling, one of the most [hotly-contested](
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="wp2md" class="doc_header"><code>wp2md</code><a href="https://github.com/outerbounds/wp2md/tree/master/wp2md/wp2md.py#L61" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>wp2md</code>(<strong><code>id</code></strong>:<code>int</code>, <strong><code>baseurl</code></strong>:<code>str</code>=<em><code>'https://outerbounds.com/wp-json/wp/v2/posts'</code></em>, <strong><code>dest_path</code></strong>:<code>str</code>=<em><code>'.'</code></em>, <strong><code>dest_file</code></strong>:<code>str</code>=<em><code>None</code></em>)</p>
+<h4 id="wp2md" class="doc_header"><code>wp2md</code><a href="https://github.com/outerbounds/wp2md/tree/master/wp2md/wp2md.py#L99" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>wp2md</code>(<strong><code>url_or_id</code></strong>:"the public URL of the WP article OR the post id", <strong><code>apiurl</code></strong>:"the base url for the wordpress api to retrieve posts for your site."=<em><code>'https://outerbounds.com/wp-json/wp/v2/posts'</code></em>, <strong><code>dest_path</code></strong>:"The path to save the markdown file to"=<em><code>'.'</code></em>, <strong><code>dest_file</code></strong>:"Name of destination markdown file. If not given defaults to the slug indicated in wordpress"=<em><code>None</code></em>, <strong><code>no_download</code></strong>:"Pass this flag to NOT download any images locally"=<em><code>False</code></em>)</p>
 </blockquote>
 <p>Convert A wordpress post into markdown file with front matter.</p>
-<table>
-<thead><tr>
-<th></th>
-<th>Type</th>
-<th>Default</th>
-<th>Details</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong><code>id</code></strong></td>
-<td><code>int</code></td>
-<td></td>
-<td><em>No Content</em></td>
-</tr>
-<tr>
-<td><strong><code>baseurl</code></strong></td>
-<td><code>str</code></td>
-<td><code>https://outerbounds.com/wp-json/wp/v2/posts</code></td>
-<td>the baseurl that corresponds to the wp api</td>
-</tr>
-<tr>
-<td><strong><code>dest_path</code></strong></td>
-<td><code>str</code></td>
-<td><code>.</code></td>
-<td>The path to save the markdown file to</td>
-</tr>
-<tr>
-<td><strong><code>dest_file</code></strong></td>
-<td><code>str</code></td>
-<td><code>None</code></td>
-<td>Optional, if not given defaults to the slug indicated in wordpress</td>
-</tr>
-</tbody>
-</table>
 
 </div>
 
