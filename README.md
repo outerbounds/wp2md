@@ -94,7 +94,7 @@ A Wordpress post may note be public (i.e. it might have a status other than `pub
 
 2. The `post id` you wish to convert to markdown. The post id can be extracted from wordpress edit url, for example the id for `https://outerbounds.com/wp-admin/post.php?post=220&action=edit` is `220`.
 
-For example, we can get the contets of a post which has an id of `220` as follows:
+For example, we can get the contents of a post which has an id of `220` as follows:
 
 ```python
 ! wp2md 220
