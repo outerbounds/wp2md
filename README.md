@@ -1,8 +1,6 @@
-# Project name here
-> Summary description here.
+# wp2md
+> Convert Wordpress Posts To Markdown
 
-
-This file will become your README and also the index of your documentation.
 
 ## Install
 
@@ -33,6 +31,8 @@ This file will become your README and also the index of your documentation.
       --dest_file DEST_FILE  Optional, if not given defaults to the slug indicated
                              in wordpress
 
+
+## Example
 
 To convert a wordpress post to markdown, you will have to have to have two pieces of information:
 
