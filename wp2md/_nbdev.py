@@ -2,7 +2,8 @@
 
 __all__ = ["index", "modules", "custom_doc_links", "git_url"]
 
-index = {"WP": "00_wp2md.ipynb",
+index = {"url2api": "00_wp2md.ipynb",
+         "WP": "00_wp2md.ipynb",
          "wp2md": "00_wp2md.ipynb"}
 
 modules = ["wp2md.py"]
