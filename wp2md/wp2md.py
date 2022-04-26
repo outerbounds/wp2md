@@ -4,10 +4,11 @@ __all__ = ['url2api', 'WP', 'wp2md']
 
 # Cell
 import re
-from fastcore.utils import urljson, AttrDict, Path, first, test_eq, urlread, urlsave
+from fastcore.utils import urljson, AttrDict, Path, first, test_eq, urlread, urlsave, L
 from fastcore.script import call_parse, store_true, Param
 from IPython.display import Markdown
 from markdownify import markdownify as md
+from json import dumps
 
 # Cell
 def _getpost(url:str=None, post_id:int=None, baseurl:str=None):
@@ -30,12 +31,17 @@ _re_img = re.compile(r'\!\[.*?\]\((\S+)\)')
 
 class WP:
     def __init__(self, url:str=None, baseurl:str=None, post_id:int=None):
-        if url: self.apiurl = url2api(url)
-        else: self.apiurl=f"{baseurl if baseurl.endswith('/') else baseurl+'/'}{post_id}"
-        self.post = _getpost(self.apiurl)
+        if url:
+            self.posturl = url2api(url)
+            self.baseurl = self.posturl.split('posts/')[0]
+        else:
+            self.baseurl = baseurl if baseurl.endswith('/') else baseurl+'/'
+            self.posturl = f"{self.baseurl}posts/{post_id}"
+
+        self.post = _getpost(self.posturl)
         self.img_map = {}
 
-    _props = ['title', 'date', 'draft', 'description', 'image', 'slug']
+    _props = ['title', 'date', 'tags', 'draft', 'description', 'image', 'slug']
 
     @property
     def mdimages(self): return _re_img.findall(self.raw_markdown)
@@ -51,6 +57,15 @@ class WP:
         for o,n in self.img_map.items():
             md = re.sub(o, n, md)
         return md
+
+    @property
+    def tags(self) -> list:
+        _tags = L(self.post.get('categories')).map(self._tagid2nm).filter()
+        return dumps(list(_tags))
+
+
+    def _tagid2nm(self, id) -> str:
+        return urljson(f"{self.baseurl}categories/{id}").get('name')
 
     @property
     def draft(self) -> str:
@@ -75,7 +90,9 @@ class WP:
         fm = '---\n'
         for p in self._props:
             attr = getattr(self, p, None)
-            if attr: fm+=f'{p}: "{attr}"\n'
+            if attr:
+                if p != 'tags': fm+=f'{p}: "{attr}"\n'
+                else: fm+=f'{p}: {attr}\n'
         return fm+'---\n'
 
     def __getattr__(self, name):
