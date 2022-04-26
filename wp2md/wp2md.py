@@ -57,6 +57,10 @@ class WP:
         return str(self.post.draft != 'publish').lower()
 
     @property
+    def description(self) -> str:
+        return self.post.yoast_head_json.get('description')
+
+    @property
     def title(self) -> str:
         title = self.post.get('title', None)
         return title.get('rendered', None) if title else title
