@@ -41,7 +41,7 @@ class WP:
         self.post = _getpost(self.posturl)
         self.img_map = {}
 
-    _props = ['title', 'date', 'tags', 'draft', 'description', 'image', 'slug']
+    _props = ['title', 'date', 'tags', 'keywords', 'draft', 'description', 'image', 'slug']
 
     @property
     def mdimages(self): return _re_img.findall(self.raw_markdown)
@@ -57,6 +57,10 @@ class WP:
         for o,n in self.img_map.items():
             md = re.sub(o, n, md)
         return md
+
+    @property
+    def keywords(self) -> list:
+        return self.tags
 
     @property
     def tags(self) -> list:
@@ -91,7 +95,7 @@ class WP:
         for p in self._props:
             attr = getattr(self, p, None)
             if attr:
-                if p != 'tags': fm+=f'{p}: "{attr}"\n'
+                if p not in ['keywords', 'tags']: fm+=f'{p}: "{attr}"\n'
                 else: fm+=f'{p}: {attr}\n'
         return fm+'---\n'
 
