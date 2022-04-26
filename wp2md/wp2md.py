@@ -35,7 +35,7 @@ class WP:
         self.post = _getpost(self.apiurl)
         self.img_map = {}
 
-    _props = ['title', 'date', 'tags', 'draft', 'description', 'image', 'slug']
+    _props = ['title', 'date', 'draft', 'description', 'image', 'slug']
 
     @property
     def mdimages(self): return _re_img.findall(self.raw_markdown)
