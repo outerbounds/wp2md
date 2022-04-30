@@ -4,8 +4,7 @@ __all__ = ['url2api', 'WP', 'wp2md']
 
 # Cell
 import re
-from fastcore.utils import urljson, AttrDict, Path, first, test_eq, urlread, urlsave, L
-from fastcore.script import call_parse, store_true, Param
+from fastcore.all import urljson, AttrDict, Path, first, test_eq, urlread, urlsave, L, call_parse, store_true, Param
 from IPython.display import Markdown
 from markdownify import markdownify as md
 from json import dumps
