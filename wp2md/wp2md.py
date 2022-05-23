@@ -29,7 +29,7 @@ def url2api(url):
 _re_img = re.compile(r'\!\[.*?\]\((\S+)\)')
 
 class WP:
-    def __init__(self, url:str=None, baseurl:str=None, post_id:int=None):
+    def __init__(self, url:str=None, baseurl:str=None, post_id:int=None, dest_path:str=None, dest_file:str=None):
         if url:
             self.posturl = url2api(url)
             self.baseurl = self.posturl.split('posts/')[0]
@@ -39,6 +39,8 @@ class WP:
 
         self.post = _getpost(self.posturl)
         self.img_map = {}
+        if not dest_path: self.dest_path = '.'
+        if not dest_file: self.dest_file = self.slug+'.md'
 
     _props = ['title', 'date', 'tags', 'keywords', 'draft', 'description', 'image', 'slug']
 
@@ -48,6 +50,11 @@ class WP:
     def save_images(self, dest_path, nb_path):
         for i,img in enumerate(self.mdimages):
             dest=Path(dest_path)/f'{i}_img'
+            file_pth = urlsave(img, dest=dest)
+            self.img_map[img] = str(file_pth.relative_to(nb_path))
+        if getattr(self, 'image'):
+            img = self.image
+            dest=Path(dest_path)/f'og.png'
             file_pth = urlsave(img, dest=dest)
             self.img_map[img] = str(file_pth.relative_to(nb_path))
 
@@ -94,7 +101,8 @@ class WP:
         for p in self._props:
             attr = getattr(self, p, None)
             if attr:
-                if p not in ['keywords', 'tags']: fm+=f'{p}: "{attr}"\n'
+                if p == 'image': fm+=f'{p}: ./{self.img_dir}/og.png\n'
+                elif p not in ['keywords', 'tags']: fm+=f'{p}: "{attr}"\n'
                 else: fm+=f'{p}: {attr}\n'
         return fm+'---\n'
 
@@ -102,22 +110,25 @@ class WP:
         return self.post.get(name, None)
 
     @property
-    def raw_markdown(self) -> str:
-        return md(self.post.content['rendered'])
+    def raw_markdown(self) -> str: return md(self.post.content['rendered'])
 
     @property
     def markdown(self) -> str:
         "Return the markdown representation of the body of the post."
         return self.frontmatter + self._replace_images(self.raw_markdown)
 
-    def tomd(self, dest_path:str=None, dest_file:str=None, download=True) -> None:
+    @property
+    def dest_file_path(self) -> Path: return Path(self.dest_path)/self.dest_file
+
+    @property
+    def img_dir(self, dest_path:str=None, dest_file:str=None) -> Path:
+        return self.dest_file_path.parent/f'_{self.dest_file_path.stem}_data'
+
+    def tomd(self, download=True) -> None:
         "Write markdown representation of wordpress post"
-        if not dest_path: dest_path = '.'
-        if not dest_file: dest_file = self.slug+'.md'
-        p = Path(dest_path)/dest_file
-        if download: self.save_images(p.parent/f'_{p.stem}_data', nb_path=dest_path)
-        print(f'Writing: {p}')
-        p.write_text(self.markdown)
+        if download: self.save_images(self.img_dir, nb_path=self.dest_path)
+        print(f'Writing: {self.dest_file_path}')
+        self.dest_file_path.write_text(self.markdown)
 
 # Cell
 @call_parse
@@ -129,5 +140,5 @@ def wp2md(url_or_id:Param('the public URL of the WP article OR the post id', str
          ):
     "Convert A wordpress post into markdown file with front matter."
     if url_or_id.isnumeric(): post = WP(baseurl=apiurl, post_id=url_or_id)
-    else: post = WP(url=url_or_id)
-    post.tomd(dest_path=dest_path, dest_file=dest_file, download=not no_download)
+    else: post = WP(url=url_or_id, dest_path=dest_path, dest_file=dest_file)
+    post.tomd(download=not no_download)
