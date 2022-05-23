@@ -39,8 +39,8 @@ class WP:
 
         self.post = _getpost(self.posturl)
         self.img_map = {}
-        if not dest_path: self.dest_path = '.'
-        if not dest_file: self.dest_file = self.slug+'.md'
+        self.dest_path = self.dest_path = '.' if not dest_path else dest_path
+        self.dest_file = self.slug+'.md' if not dest_file else dest_file
 
     _props = ['title', 'date', 'tags', 'keywords', 'draft', 'description', 'image', 'slug']
 
