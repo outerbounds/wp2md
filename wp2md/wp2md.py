@@ -59,7 +59,6 @@ class WP:
             self.img_map[img] = str(file_pth.relative_to(nb_path))
 
     def _replace_images(self, md):
-        md = self.raw_markdown
         for o,n in self.img_map.items():
             md = re.sub(o, n, md)
         return md
@@ -121,7 +120,7 @@ class WP:
     def dest_file_path(self) -> Path: return Path(self.dest_path)/self.dest_file
 
     @property
-    def img_dir(self, dest_path:str=None, dest_file:str=None) -> Path:
+    def img_dir(self) -> Path:
         return self.dest_file_path.parent/f'_{self.dest_file_path.stem}_data'
 
     def tomd(self, download=True) -> None:
